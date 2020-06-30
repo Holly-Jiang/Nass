@@ -52,18 +52,18 @@ Nass also supports distributed index building. For distributed index building, t
 Do not specify any option for a client node. A client node receives necessary options from the coordinator. 
 
 For example, the following command construct an index of the AIDS dataset for threshold 5 using 3 distributed nodes (24 thresads in total), and save the index into the file AIDS.2GB.idx in the coordinator. We assume the ip address of the coordinator is 123.456.798.111
-> nass 5 data/AIDS AIDS.2GB.idx -p 8 -M 2000 --coordinator (coordinator) <br>
-> nass data/AIDS 123.456.789.111 (client 1) <br>
-> nass data/AIDS 123.456.789.111 (client 2)
+> nass-index 5 data/AIDS AIDS.2GB.idx -p 8 -M 2000 --coordinator (coordinator) <br>
+> nass-index data/AIDS 123.456.789.111 (client 1) <br>
+> nass-index data/AIDS 123.456.789.111 (client 2)
 
 # Sampling for indexing (experimental)
 We have an experimental sampling option in building an index. Our sampling option is not for constructing a sparse index. Given a threshold index_threshold for an index, we build index entries with index_threshold only for the sampled graphs. For remaining graphs, we construct index entries with index_threshold - 1. We assume that a graph having similar graphs is more likely to be queried. Based on the assumption, we sample graphs having similar graphs within a very low GED threshold.
 
 To use sampling, we first build an index with a very low threshold. Nass utilizes the index to identify and sample graphs having similar graphs. For example, the following commands construct an index with 30% sampling rate.
 
-> nass 2 data/AIDS AIDS.sample.idx <br>
-> nass 6 data/AIDS AIDS.sample.idx -s 30 -p 8 -M 2000 --coordinator <br>
-> nass data/AIDS 123.456.789.111
+> nass-index 2 data/AIDS AIDS.sample.idx <br>
+> nass-index 6 data/AIDS AIDS.sample.idx -s 30 -p 8 -M 2000 --coordinator <br>
+> nass-index data/AIDS 123.456.789.111
 
 The first command makes an index for sampling data graphs, which should be run very fast. Then the second command uses the index for sampling and construct index with 30% sampling rate. Note that the index constructed from the second command overwrites AIDS.sample.idx. The thrid command launches a client for distributed index building. For a client node, we don't need any options except the data file and the address of the coordinator.
 
