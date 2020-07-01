@@ -56,6 +56,8 @@ For example, the following command construct an index of the AIDS dataset for th
 > nass-index data/AIDS 123.456.789.111 (client 1) <br>
 > nass-index data/AIDS 123.456.789.111 (client 2)
 
+A client can participate in the index construction at any time. Our implementation is not fault-tolerant. Once a client has participated, therefore, it should not be terminated until the index construction is completed. Otherwise, the coordinator will wait forever for the results of a graph assigned to the terminated client.
+
 # Sampling for indexing (experimental)
 We have an experimental sampling option in building an index. Our sampling option is not for constructing a sparse index. Given a threshold index_threshold for an index, we build index entries with index_threshold only for the sampled graphs. For remaining graphs, we construct index entries with index_threshold - 1. We assume that a graph having similar graphs is more likely to be queried. Based on the assumption, we sample graphs having similar graphs within a very low GED threshold.
 
